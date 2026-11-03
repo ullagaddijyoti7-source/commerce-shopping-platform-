@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laxmi | Interactive Portfolio</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* CSS Variables for Light & Dark Themes */
+        :root[data-theme="dark"] {
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --text-primary: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-color: #334155;
+            --primary: #6c5ce7;
+            --primary-hover: #5b4bc4;
+            --accent: #00cec9;
+            --shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+            --input-bg: #0f172a;
+        }
+
+        :root[data-theme="light"] {
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-primary: #1e293b;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --primary: #6c5ce7;
+            --primary-hover: #5b4bc4;
+            --accent: #00b894;
+            --shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.1);
+            --input-bg: #f1f5f9;
+        }
+
+        /* Basic Resets & Smooth Scroll Setup */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Navigation Header */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(12px);
+            z-index: 1000;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        :root[data-theme="light"] header {
+            background: rgba(255, 255, 255, 0.85);
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            text-decoration: none;
+        }
+
+        .logo span {
+            color: var(--accent);
+        }
+
+        .nav-controls {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active-link {
+            color: var(--accent);
+        }
+
+        /* Dark/Light Mode Toggle Button */
+        .theme-toggle {
+            background: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 0.5rem 0.8rem;
+            border-radius: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .theme-toggle:hover {
+            border-color: var(--accent);
+        }
+
+        .menu-toggle {
+            display: none;
+            font-size: 1.5rem;
+            color: var(--text-primary);
+            cursor: pointer;
+        }
+
+        /* Layout Sections */
+        section {
+            padding: 6rem 2rem 4rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.2rem;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background: var(--accent);
+            margin: 0.5rem auto 0;
+            border-radius: 2px;
+        }
+
+        /* Scroll Animation Target Class */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Hero Section */
+        #hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 3rem;
+            padding-top: 6rem;
+        }
+
+        .hero-content {
+            flex: 1;
+        }
+
+        .hero-content h3 {
+            color: var(--accent);
+            font-size: 1.2rem;
+            font-weight: 500;
+        }
+
+        .hero-content h1 {
+            font-size: 3.2rem;
+            line-height: 1.2;
+            margin: 0.5rem 0 1rem;
+        }
+
+        .hero-content p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.8rem 1.8rem;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: #ffffff;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-hover);
+        }
+
+        .btn-outline {
+            border: 2px solid var(--accent);
+            color: var(--accent);
+            background: transparent;
+        }
+
+        .btn-outline:hover {
+            background: var(--accent);
+            color: var(--bg-color);
+        }
+
+        .profile-img-container {
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            border: 4px solid var(--primary);
+            padding: 8px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            box-shadow: var(--shadow);
+        }
+
+        .profile-img-container img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            background-color: var(--card-bg);
+        }
+
+        /* About & Project Cards */
+        .card {
+            background: var(--card-bg);
+            padding: 2.5rem;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow);
+        }
+
+        .project-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1rem;
+            list-style: none;
+            margin: 1.5rem 0;
+        }
+
+        .project-features li {
+            background: var(--input-bg);
+            padding: 0.8rem 1rem;
+            border-radius: 6px;
+            border-left: 3px solid var(--accent);
+            color: var(--text-primary);
+        }
+
+        .tech-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+        }
+
+        .tag {
+            background: rgba(108, 92, 231, 0.2);
+            color: var(--accent);
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        /* Skills Grid */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .skill-card {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            text-align: center;
+        }
+
+        .skill-card i {
+            font-size: 2.5rem;
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+
+        /* Contact Section & Form Validation */
+        .contact-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+            margin-bottom: 1.2rem;
+        }
+
+        .form-group label {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        .form-group input,
+        .form-group textarea {
+            padding: 0.8rem;
+            background: var(--input-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            color: var(--text-primary);
+            outline: none;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            border-color: var(--accent);
+        }
+
+        .error-msg {
+            color: #ff7675;
+            font-size: 0.8rem;
+            display: none;
+        }
+
+        .form-group.error input,
+        .form-group.error textarea {
+            border-color: #ff7675;
+        }
+
+        .form-group.error .error-msg {
+            display: block;
+        }
+
+        .success-banner {
+            display: none;
+            background: rgba(0, 184, 148, 0.2);
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            padding: 1rem;
+            border-radius: 6px;
+            margin-bottom: 1rem;
+            text-align: center;
+            font-weight: 500;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            background: var(--card-bg);
+            border-top: 1px solid var(--border-color);
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* Mobile Adjustments */
+        @media (max-width: 992px) {
+            #hero {
+                flex-direction: column-reverse;
+                text-align: center;
+                gap: 2rem;
+            }
+
+            .contact-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
+
+            .nav-links {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: var(--card-bg);
+                flex-direction: column;
+                padding: 1.5rem 0;
+                gap: 1.5rem;
+                display: none;
+                border-bottom: 1px solid var(--border-color);
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header & Interactive Navigation -->
+    <header>
+        <nav>
+            <a href="#hero" class="logo">Laxmi<span>.dev</span></a>
+            <div class="nav-controls">
+                <button class="theme-toggle" id="theme-btn" aria-label="Toggle Theme">
+                    <i class="fa-solid fa-moon"></i> <span>Dark</span>
+                </button>
+                <div class="menu-toggle" id="mobile-menu">
+                    <i class="fa-solid fa-bars"></i>
+                </div>
+            </div>
+            <ul class="nav-links" id="nav-list">
+                <li><a href="#hero" class="nav-item active-link">Home</a></li>
+                <li><a href="#about" class="nav-item">About</a></li>
+                <li><a href="#project" class="nav-item">Project</a></li>
+                <li><a href="#skills" class="nav-item">Skills</a></li>
+                <li><a href="#contact" class="nav-item">Contact</a></li>
+                <li>
+                    <button class="btn btn-outline" onclick="downloadWebsite()" style="padding: 0.4rem 0.8rem; font-size: 0.85rem;">
+                        <i class="fa-solid fa-download"></i> Save File
+                    </button>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="hero">
+        <div class="hero-content reveal">
+            <h3>Hello, I'm Laxmi 👋</h3>
+            <h1>Full-Stack Developer</h1>
+            <p>BCA Student crafting responsive, dynamic applications with interactive JavaScript features and real-time form handling.</p>
+            <div class="hero-buttons">
+                <a href="#project" class="btn btn-primary"><i class="fa-solid fa-laptop-code"></i> View Project</a>
+                <a href="#contact" class="btn btn-outline"><i class="fa-solid fa-paper-plane"></i> Contact Me</a>
+            </div>
+        </div>
+        <div class="hero-image-wrapper reveal">
+            <div class="profile-img-container">
+                <img src="https://via.placeholder.com/300" alt="Laxmi Profile Picture">
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about">
+        <h2 class="section-title reveal">About Me</h2>
+        <div class="card reveal">
+            <p>I am a Computer Applications student focused on modern software design and client-side interactivity. By combining HTML structural layout, CSS responsive grids, and clean JavaScript logic, I turn dynamic requirements into optimized, fully functional web projects.</p>
+        </div>
+    </section>
+
+    <!-- Project Section -->
+    <section id="project">
+        <h2 class="section-title reveal">Featured Project</h2>
+        <div class="card reveal">
+            <h3><i class="fa-solid fa-cart-shopping" style="color: var(--accent);"></i> Online E-Commerce Shopping Platform</h3>
+            <p style="color: var(--text-muted); margin-top: 0.5rem;">An e-commerce web platform engineered for real-time shopping cart updates, product filtering, and dynamic user checkout processing.</p>
+            
+            <ul class="project-features">
+                <li><i class="fa-solid fa-user-check"></i> Account Registration & Login</li>
+                <li><i class="fa-solid fa-store"></i> Interactive Product Catalogue</li>
+                <li><i class="fa-solid fa-calculator"></i> Real-time Cart Total Calculation</li>
+                <li><i class="fa-solid fa-credit-card"></i> Order Submission Workflow</li>
+            </ul>
+
+            <div class="tech-tags">
+                <span class="tag">HTML5</span>
+                <span class="tag">CSS3</span>
+                <span class="tag">JavaScript (ES6+)</span>
+                <span class="tag">Python</span>
+                <span class="tag">Django</span>
+                <span class="tag">SQLite</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills">
+        <h2 class="section-title reveal">Technical Skills</h2>
+        <div class="skills-grid">
+            <div class="skill-card reveal">
+                <i class="fa-brands fa-js"></i>
+                <h4>JavaScript Development</h4>
+                <p>DOM Manipulation, Event Handling, Form Validations, Theme Switching</p>
+            </div>
+            <div class="skill-card reveal">
+                <i class="fa-brands fa-html5"></i>
+                <h4>Frontend Architecture</h4>
+                <p>HTML5, Responsive CSS Flexbox & Grid, CSS Variables</p>
+            </div>
+            <div class="skill-card reveal">
+                <i class="fa-solid fa-code"></i>
+                <h4>Backend & OOP</h4>
+                <p>Python, Django, C, C++, C#, VB.NET</p>
+            </div>
+            <div class="skill-card reveal">
+                <i class="fa-solid fa-database"></i>
+                <h4>Database Management</h4>
+                <p>SQLite, Schema Design, Data Querying</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section with Form Validation -->
+    <section id="contact">
+        <h2 class="section-title reveal">Get In Touch</h2>
+        <div class="card contact-container reveal">
+            <div>
+                <h3>Let's Connect</h3>
+                <p style="color: var(--text-muted); margin-top: 0.5rem;">Have questions or project ideas? Fill out the form to test live JavaScript client-side validation.</p>
+            </div>
+
+            <div>
+                <div class="success-banner" id="success-banner">
+                    <i class="fa-solid fa-circle-check"></i> Message validated & sent successfully!
+                </div>
+                
+                <form id="contact-form" novalidate>
+                    <div class="form-group" id="group-name">
+                        <label for="name">Full Name</label>
+                        <input type="text" id="name" placeholder="Enter your name">
+                        <span class="error-msg">Name must be at least 2 characters long.</span>
+                    </div>
+
+                    <div class="form-group" id="group-email">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" placeholder="Enter your email">
+                        <span class="error-msg">Please enter a valid email address.</span>
+                    </div>
+
+                    <div class="form-group" id="group-message">
+                        <label for="message">Message</label>
+                        <textarea id="message" rows="4" placeholder="Enter your message"></textarea>
+                        <span class="error-msg">Message must be at least 10 characters long.</span>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center;">
+                        <i class="fa-solid fa-paper-plane"></i> Send Message
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 Laxmi. Built with Interactive JavaScript, Dark Mode, & Scroll Animations.</p>
+    </footer>
+
+    <!-- JavaScript Implementation -->
+    <script>
+        /* 1. Mobile Navigation Menu Toggle */
+        const mobileMenu = document.getElementById('mobile-menu');
+        const navList = document.getElementById('nav-list');
+
+        mobileMenu.addEventListener('click', () => {
+            navList.classList.toggle('active');
+            const icon = mobileMenu.querySelector('i');
+            icon.classList.toggle('fa-bars');
+            icon.classList.toggle('fa-xmark');
+        });
+
+        /* 2. Dark/Light Theme Switcher */
+        const themeBtn = document.getElementById('theme-btn');
+        const htmlElement = document.documentElement;
+
+        themeBtn.addEventListener('click', () => {
+            const currentTheme = htmlElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            htmlElement.setAttribute('data-theme', newTheme);
+            themeBtn.querySelector('i').className = newTheme === 'dark' ? 'fa-solid fa-moon' : 'fa-solid fa-sun';
+            themeBtn.querySelector('span').textContent = newTheme === 'dark' ? 'Dark' : 'Light';
+        });
+
+        /* 3. Smooth Scroll Link Activation & Auto-close Mobile Menu */
+        const navLinks = document.querySelectorAll('.nav-item');
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', function (e) {
+                navList.classList.remove('active');
+                const icon = mobileMenu.querySelector('i');
+                icon.classList.add('fa-bars');
+                icon.classList.remove('fa-xmark');
+
+                navLinks.forEach(item => item.classList.remove('active-link'));
+                this.classList.add('active-link');
+            });
+        });
+
+        /* 4. Scroll Reveal Animations */
+        function revealOnScroll() {
+            const reveals = document.querySelectorAll('.reveal');
+            const windowHeight = window.innerHeight;
+            
+            reveals.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                const revealPoint = 120;
+
+                if (elementTop < windowHeight - revealPoint) {
+                    element.classList.add('active');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', revealOnScroll);
+        window.addEventListener('load', revealOnScroll);
+
+        /* 5. Contact Form Validation */
+        const contactForm = document.getElementById('contact-form');
+        const nameInput = document.getElementById('name');
+        const emailInput = document.getElementById('email');
+        const messageInput = document.getElementById('message');
+        const successBanner = document.getElementById('success-banner');
+
+        function validateEmail(email) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(String(email).toLowerCase());
+        }
+
+        function setError(elementId, isError) {
+            const group = document.getElementById(elementId);
+            if (isError) {
+                group.classList.add('error');
+            } else {
+                group.classList.remove('error');
+            }
+        }
+
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            let isValid = true;
+
+            // Validate Name
+            if (nameInput.value.trim().length < 2) {
+                setError('group-name', true);
+                isValid = false;
+            } else {
+                setError('group-name', false);
+            }
+
+            // Validate Email
+            if (!validateEmail(emailInput.value.trim())) {
+                setError('group-email', true);
+                isValid = false;
+            } else {
+                setError('group-email', false);
+            }
+
+            // Validate Message
+            if (messageInput.value.trim().length < 10) {
+                setError('group-message', true);
+                isValid = false;
+            } else {
+                setError('group-message', false);
+            }
+
+            // Handle Successful Validation
+            if (isValid) {
+                successBanner.style.display = 'block';
+                contactForm.reset();
+                setTimeout(() => {
+                    successBanner.style.display = 'none';
+                }, 4000);
+            }
+        });
+
+        /* 6. Download HTML File Feature */
+        function downloadWebsite() {
+            const htmlContent = "<!DOCTYPE html>\n" + document.documentElement.outerHTML;
+            const blob = new Blob([htmlContent], { type: "text/html" });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = "index.html";
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+    </script>
+</body>
+</html>
